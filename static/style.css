@@ -1,0 +1,48 @@
+h1 {
+    text-align: center;
+    margin: 50px 0;
+}
+
+#keyword {
+    margin: auto;
+    width: 90%;
+}
+
+#options {
+    display: flex;
+    flex-direction: row; /* column일 경우 세로 나열, row일 경우 가로 나열 */
+    justify-content: center;
+}
+
+.block {
+    margin: 0 auto;
+    float: left;
+    width: 50%;
+}
+
+table {
+    border-collapse: collapse;
+    cursor: pointer;
+}
+
+#category-select-list {
+    overflow: auto;
+    height: 200px;
+}
+
+li {
+    list-style-type: none;
+    margin-left: -30px;
+}
+
+.all-columns {
+    margin-left: -40px;
+}
+
+.sub {
+    margin-left: -20px;
+}
+
+button {
+    width: 100%; 
+}

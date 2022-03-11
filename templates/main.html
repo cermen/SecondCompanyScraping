@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script>
+        // 컬럼 목록 열기/닫기
+        function openList() {
+            const list = document.getElementById('category-select-list');
+            if (list.style.display === 'none') {
+                list.style.display = 'block';
+            } else {
+                list.style.display = 'none';
+            }
+        }
+
+        // 컬럼 전체 선택 시 '전체 선택' checkbox on/off
+        function checkSelectAll(all, cls) {
+            const allCheckSelector = "input[value='" + all + "']";
+
+            let items, checkedItems;
+            if (cls) {
+                const checkedItemsSelector = "." + cls + ":checked";
+                items = document.getElementsByClassName(cls);                              // 그룹 전체 항목
+                checkedItems = document.querySelectorAll(checkedItemsSelector);            // 그룹 전체 항목 중 선택된 항목
+            } else {   
+                items = document.querySelectorAll('input[type="checkbox"]');                     // 전체 항목
+                checkedItems = document.querySelectorAll('input[type="checkbox"]:checked');      // 전체 항목 중 선택된 항목
+            }
+            const allCheck = document.querySelector(allCheckSelector);       // '(그룹) 전체 선택' 항목
+
+            if (items.length === checkedItems.length) {
+                allCheck.checked = true;
+            } else {
+                allCheck.checked = false;
+            }
+        }
+
+        // 전체 선택
+        function selectAll(all, cls) {
+            let items;
+            if (cls) {  // cls 인자가 정의될 경우 그룹 내 컬럼 전체 선택
+                items = document.getElementsByClassName(cls);
+            } else {
+                items = document.querySelectorAll('input[type="checkbox"]');
+            }
+            Array.from(items).forEach(item => {
+                item.checked = all.checked;
+            });
+        }
+    </script>
+</head>
+<body class="container my-5">
+    <h1>Seamless 해외 기업 정보 수집 서비스</h1>
+    <div class="container" style="width: 80%; margin: 0 auto;">
+        <form action="" method="post" id="scrap">
+            <input type="text" style="width: 80%;" placeholder="검색어를 입력하세요" class="form-control mt-4" name="keyword" id="keyword"><br/>
+            <div id="options">
+                <div class="container block center-block col-sm-5 mx-4" id="category">
+                    <div class="container pb-2">검색할 카테고리</div>
+                    <table class="table" id='category-select' onclick="openList()">
+                        <tr>
+                            <td>검색할 항목 선택</td>
+                            <td>▼</td>
+                        </tr>
+                    </table>
+                    <div class="container block col-sm-10 mx-4" id="category-select-list" style="display: none;">
+                        <ul>
+                            <li class="all-columns"><input type="checkbox" name="all" id="all" value="all" onchange="selectAll(this)"><label for="all">전체</label></li>
+                            <li><input type="checkbox" name="column" id="Company-Name" value="Company Name" onchange="checkSelectAll('all')"><label for="Company-Name">Company Name</label></li>
+                            <li><input type="checkbox" name="column" id="Description" value="Description" onchange="checkSelectAll('all')"><label for="Description">Description</label></li>
+                            <li><input type="checkbox" name="column" id="Website" value="Website" onchange="checkSelectAll('all')"><label for="Website">Website</label></li>
+                            <li><input type="checkbox" name="column" id="Industry" value="Industry" onchange="checkSelectAll('all')"><label for="Industry">Industry</label></li>
+                            <li><input type="checkbox" name="column" id="Company-Size" value="Company Size" onchange="checkSelectAll('all')"><label for="Company-Size">Company Size</label></li>
+                            <li><input type="checkbox" name="column" id="Founded" value="Founded" onchange="checkSelectAll('all')"><label for="Founded">Founded</label></li>
+                            <li><input type="checkbox" name="column" id="Company-Type" value="Company Type" onchange="checkSelectAll('all')"><label for="Company-Type">Company Type</label></li>
+                            <li><input type="checkbox" name="column" id="Revenue" value="Revenue" onchange="checkSelectAll('all')"><label for="Revenue">Revenue</label></li>
+                            <li><input type="checkbox" name="column" id="Location" value="Location" onchange="checkSelectAll('all')"><label for="Location">Location</label></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="container block col-sm-5 mx-4" id="page">
+                    <table class="table table-borderless align-middle">
+                        <tr>
+                            <td>시작 페이지</td>
+                            <td><input type="text" class="form-control" name="start-page" id="start-page"></td>
+                        </tr>
+                        <tr>
+                            <td>마지막 페이지</td>
+                            <td><input type="text" class="form-control" name="end-page" id="end-page"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 25%; margin: 0 auto;">
+                <button type="submit" class="btn btn-primary">수집하기</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

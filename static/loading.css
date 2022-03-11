@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    flex-direction: column; /* column일 경우 세로 나열, row일 경우 가로 나열 */
+    justify-content: center;
+    align-items: center;
+    padding: 10% 0;
+}
+
+p {
+    font-size: 16pt;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
