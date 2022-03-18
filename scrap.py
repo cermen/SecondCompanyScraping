@@ -12,6 +12,8 @@ import pandas as pd
 from datetime import datetime
 import time
 
+from tkinter.filedialog import asksaveasfilename
+
 
 # seamless 로그아웃
 def logout(driver):
@@ -155,12 +157,14 @@ def scrap(keyword, start_page, end_page, columns):
         all_data.reverse()
         all_data = pd.DataFrame(all_data, columns=all_columns, index=list(range(1, item_len + 1)))[columns]
 
+        # file_type = [('엑셀 파일', '*.xlsx')]
+        # file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
+        # all_data.to_excel(file_name, encoding='utf-8-sig')
+
         now = datetime.today().strftime('%y%m%d_%H%M%S')
 
         file_name = 'seamless_{}_{}.xlsx'.format(keyword, now)
         all_data.to_excel(file_name, encoding='utf-8-sig')
-
-        return file_name
     except Exception:
         time.sleep(1)
         driver.find_element_by_css_selector('body').send_keys(Keys.ESCAPE)

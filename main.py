@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, send_file
 from scrap import scrap
 
 app = Flask('__name__')
@@ -24,7 +24,7 @@ def execute_scraping():
 
         file_name = scrap(keyword, start_page, end_page, columns)
 
-        return send_file(file_name, as_attachment=True)
+        return render_template('complete.html')
 
 
 if __name__ == '__main__':
