@@ -170,10 +170,7 @@ def scrap(keyword, start_page, end_page, columns):
                 delete_companies(driver)
         except NoSuchElementException:
             pass
-        logout(driver)
     else:
-        logout(driver)
-
         all_columns = [
             'Company Name', 'Description', 'Website', 'Industry', 'Company Size', 'Founded', 'Company Type',
             'Revenue',
@@ -185,3 +182,5 @@ def scrap(keyword, start_page, end_page, columns):
         file_type = [('엑셀 파일', '*.xlsx')]
         file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
         all_data.to_excel(file_name, encoding='utf-8-sig')
+    finally:
+        logout(driver)
