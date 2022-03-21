@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request
 from scrap import scrap
 
 app = Flask('__name__')
@@ -22,7 +22,7 @@ def execute_scraping():
         end_page = int(request.form['end-page'])
         columns = request.form.getlist('column')
 
-        file_name = scrap(keyword, start_page, end_page, columns)
+        scrap(keyword, start_page, end_page, columns)
 
         return render_template('complete.html')
 

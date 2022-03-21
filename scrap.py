@@ -9,7 +9,6 @@ from selenium.common.exceptions import NoSuchElementException
 
 import pandas as pd
 
-from datetime import datetime
 import time
 
 from tkinter.filedialog import asksaveasfilename
@@ -57,6 +56,9 @@ def scrap(keyword, start_page, end_page, columns):
     try:
         driver.get('https://login.seamless.ai/search/companies?page=' + str(
             start_page) + '&locations=1&companiesExactMatch=false&companyKeywords=' + keyword)
+        driver.execute_script("location.reload(true);")
+        time.sleep(1)
+
         driver.find_element_by_css_selector('button > svg').click()
 
         for p1 in range(start_page, end_page + 1):
@@ -148,23 +150,6 @@ def scrap(keyword, start_page, end_page, columns):
             time.sleep(2)
 
             delete_companies(driver)
-
-        all_columns = [
-            'Company Name', 'Description', 'Website', 'Industry', 'Company Size', 'Founded', 'Company Type',
-            'Revenue',
-            'Location'
-        ]
-        all_data.reverse()
-        all_data = pd.DataFrame(all_data, columns=all_columns, index=list(range(1, item_len + 1)))[columns]
-
-        # file_type = [('엑셀 파일', '*.xlsx')]
-        # file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
-        # all_data.to_excel(file_name, encoding='utf-8-sig')
-
-        now = datetime.today().strftime('%y%m%d_%H%M%S')
-
-        file_name = 'seamless_{}_{}.xlsx'.format(keyword, now)
-        all_data.to_excel(file_name, encoding='utf-8-sig')
     except Exception:
         time.sleep(1)
         driver.find_element_by_css_selector('body').send_keys(Keys.ESCAPE)
@@ -185,5 +170,18 @@ def scrap(keyword, start_page, end_page, columns):
                 delete_companies(driver)
         except NoSuchElementException:
             pass
-    finally:
         logout(driver)
+    else:
+        logout(driver)
+
+        all_columns = [
+            'Company Name', 'Description', 'Website', 'Industry', 'Company Size', 'Founded', 'Company Type',
+            'Revenue',
+            'Location'
+        ]
+        all_data.reverse()
+        all_data = pd.DataFrame(all_data, columns=all_columns, index=list(range(1, item_len + 1)))[columns]
+
+        file_type = [('엑셀 파일', '*.xlsx')]
+        file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
+        all_data.to_excel(file_name, encoding='utf-8-sig')
