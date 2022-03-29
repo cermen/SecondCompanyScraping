@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from scrap import scrap
 
+from tkinter.filedialog import asksaveasfilename
+
 app = Flask('__name__')
 
 
@@ -22,7 +24,10 @@ def execute_scraping():
         end_page = int(request.form['end-page'])
         columns = request.form.getlist('column')
 
-        scrap(keyword, start_page, end_page, columns)
+        file_type = [('엑셀 파일', '*.xlsx')]
+        file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
+
+        scrap(keyword, start_page, end_page, columns, file_name)
 
         return render_template('complete.html')
 

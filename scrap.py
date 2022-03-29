@@ -11,8 +11,6 @@ import pandas as pd
 
 import time
 
-from tkinter.filedialog import asksaveasfilename
-
 
 # seamless 로그아웃
 def logout(driver):
@@ -42,7 +40,7 @@ def delete_companies(driver):
     time.sleep(5)
 
 
-def scrap(keyword, start_page, end_page, columns):
+def scrap(keyword, start_page, end_page, columns, file_name):
     driver = webdriver.Chrome('chromedriver.exe')
     driver.get('https://login.seamless.ai/login')
     driver.set_window_size(1500, 1000)
@@ -178,9 +176,6 @@ def scrap(keyword, start_page, end_page, columns):
         ]
         all_data.reverse()
         all_data = pd.DataFrame(all_data, columns=all_columns, index=list(range(1, item_len + 1)))[columns]
-
-        file_type = [('엑셀 파일', '*.xlsx')]
-        file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
         all_data.to_excel(file_name, encoding='utf-8-sig')
     finally:
         logout(driver)
