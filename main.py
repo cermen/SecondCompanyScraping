@@ -11,7 +11,7 @@ def main():
     return render_template('main.html')
 
 
-@app.errorhandler(500)
+@app.errorhandler(Exception)
 def page_not_founded(error):
     return render_template('error.html')
 
@@ -33,4 +33,4 @@ def execute_scraping():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8081)
+    app.run(host='127.0.0.1', port=8081, debug=True)
