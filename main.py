@@ -26,9 +26,12 @@ def execute_scraping():
         columns = request.form.getlist('column')
 
         root = tk.Tk()
+        root.withdraw()
+        root.attributes('-topmost', True)
         file_type = [('엑셀 파일', '*.xlsx')]
         file_name = asksaveasfilename(filetypes=file_type, defaultextension=str(file_type))
-        root.withdraw()
+
+        print(file_name)
 
         scrap(keyword, start_page, end_page, columns, file_name)
 
