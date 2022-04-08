@@ -46,8 +46,8 @@ def scrap(keyword, start_page, end_page, columns, file_name):
     driver.set_window_size(1500, 1000)
 
     time.sleep(1)
-    driver.find_element_by_name('username').send_keys('anastasia@planinfinit.com')
-    driver.find_element_by_name('password').send_keys('1q2w3e$R%T')
+    driver.find_element_by_name('username').send_keys('********')
+    driver.find_element_by_name('password').send_keys('********')
     driver.find_element_by_css_selector('form > button').click()
     time.sleep(3)
 
